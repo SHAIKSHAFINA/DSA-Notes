@@ -1,0 +1,65 @@
+#Majority element
+https://leetcode.com/problems/majority-element/
+Brute:
+class Solution {
+    public int majorityElement(int[] nums) {
+        int n=nums.length;
+       for(int i=0;i<n;i++){
+        int c=0;
+        for(int j=0;j<n;j++){
+            if(nums[i]==nums[j]){
+                c++;
+            }
+        }
+        if(c>n/2) return nums[i];
+       }
+       return 0;
+    }
+}
+Time:O(N^2)
+Space:O(1)
+Better:
+class Solution {
+    public int majorityElement(int[] nums) {
+        int n=nums.length;
+        int c=0;
+        HashMap<Integer,Integer>mp=new HashMap<>();
+        for(int num:nums){
+            mp.put(num,mp.getOrDefault(num,0)+1);
+        }
+        for(Map.Entry<Integer,Integer>sc:mp.entrySet())
+        if(sc.getValue()>n/2) return sc.getKey();
+       return 0;
+    }
+}
+T:O(logn) /O(N)
+S:O(N)
+Optimal:
+class Solution {
+    public int majorityElement(int[] nums) {
+        int n=nums.length;
+        int c=0;
+        int ele=0;
+        for(int i=0;i<n;i++){
+            if(c==0){
+                c=1;
+                ele=nums[i];
+            }
+            else if(nums[i]==ele){
+                c++;
+            }
+            else{
+                c--;
+            }
+        }
+        int cnt=0;
+        for(int i=0;i<n;i++){
+            if(nums[i]==ele) cnt++;
+            if(cnt>n/2) return nums[i];
+        }
+        return 0;
+    }
+}
+T:o(n)+o(n)=o(n)
+S:o(1)
+
